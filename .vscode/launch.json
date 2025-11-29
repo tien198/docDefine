@@ -12,10 +12,9 @@
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/app.ts",
-            "runtimeExecutable": "node",
+            "runtimeExecutable": "tsx",
             "runtimeArgs": [
-                "--experimental-transform-types",
-                // "--trace-warnings"
+                "src/app.ts"
             ]
         }
     ]
