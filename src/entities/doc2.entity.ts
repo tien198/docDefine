@@ -10,7 +10,7 @@ import {
 import { Construction } from "../type/construction.type";
 import { DXA } from "./toDXA";
 import { DocumentDefaultsOptions } from "../constant/documentDefaultOptions";
-import { DocumentHeading } from "../component/documentHeaderFormat";
+import { DocumentHeadingSection } from "../component/documentHeaderFormatSection";
 
 export class Doc2 {
   generate(con: Construction) {
@@ -24,23 +24,35 @@ export class Doc2 {
           {
             id: "header-format",
             paragraph: {
-              // alignment: "center",
+              alignment: "center",
               indent: {
-                firstLine: 0,
+                hanging: DXA.fromMm(20),
+                left: DXA.fromMm(20),
               },
             },
             run: {
               size: 26,
             },
           },
+          {
+            id: "administrative-document-type",
+            paragraph: {
+              alignment: "center",
+            },
+            run: {
+              bold: true,
+            },
+          },
         ],
       },
       sections: [
+        new DocumentHeadingSection(con.documentNo, dateOfSigning),
         {
           properties: {
+            type: "continuous",
             page: {
               margin: {
-                top: DXA.fromMm(25),
+                // top: DXA.fromMm(25),
                 left: DXA.fromMm(35),
                 bottom: DXA.fromMm(20),
                 right: DXA.fromMm(15),
@@ -48,19 +60,16 @@ export class Doc2 {
             },
           },
           children: [
-            new DocumentHeading(con.documentNo, dateOfSigning),
             new Paragraph({
-              alignment: "center",
+              style: "administrative-document-type",
               children: [
-                new TextRun(con.name),
-                new TextRun({
-                  text: "\tFoo Bar",
-                  bold: true,
-                }),
-                new TextRun({
-                  text: "\nGithub is the best",
-                  bold: true,
-                }),
+                new TextRun("TỜ TRÌNH"),
+                new TextRun({ break: 1 }),
+                new TextRun("Về việc phê duyệt Kế hoạch LCNT"),
+                new TextRun({ break: 1 }),
+                new TextRun("và gói thầu “Thẩm tra Báo cáo kinh tế kỹ thuật”"),
+                new TextRun({ break: 1 }),
+                new TextRun(`Công trình: ${con.name}`),
               ],
             }),
             new Paragraph({
